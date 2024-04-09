@@ -1,19 +1,29 @@
-main {
-    display: flex;
-}
-
-main > * {
-    border: solid #000 2px;
-}
-
-#leftController {
-    width: 20%;
-}
-
-#rightController{
-    width: 20%;
-}
-
 #gameDisplay {
-    width: 60%;
+    width: 90%;
+    height: 600px;
+    border: solid #000 2px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: aqua;
+    /* display: flex;
+    justify-content: space-around;
+    flex-direction: row; */
+}
+
+.lingTossPole {
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 100px;
+    width: 10px;
+    background-color: red;
+    position: absolute;
+    top: 200px;
+}
+
+#leftLingTossPole {
+    left: 250px;
+}
+
+#rightLingTossPole {
+    left: 700px;
 }
