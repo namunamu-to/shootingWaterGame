@@ -7,8 +7,7 @@ gameDisplay.addEventListener("contextmenu", ()=> {return false});
 
 //作成中
 //水流出すハンドラ
-function pushOutWaterFlow(, distance=100, weight="50"){
-    const tangent = (Math.max(fromX, toX) - Math.min(fromX, toX)) / (Math.max(fromY, toY) - Math.min(fromY, toY));
+function pushOutWaterFlow(distance=100, weight="50"){
     // const lineLength = 
 }
 
