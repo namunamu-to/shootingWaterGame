@@ -1,0 +1,19 @@
+main {
+    display: flex;
+}
+
+main > * {
+    border: solid #000 2px;
+}
+
+#leftController {
+    width: 20%;
+}
+
+#rightController{
+    width: 20%;
+}
+
+#gameDisplay {
+    width: 60%;
+}
