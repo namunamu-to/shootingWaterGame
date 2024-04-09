@@ -3,7 +3,7 @@ const ringImgPaths = {"red" : "./img/redRing.png", "blue" : "./img/blueRing.png"
 
 
 class Ring{
-    constructor(showToElmId, x=0, y=0, width="40", height="40", color="red"){
+    constructor(showToElmId, x=0, y=0, width=40, height=40, color="red"){
         this.id = ++createdNum;
         this.x = x;
         this.y = y;
@@ -14,46 +14,44 @@ class Ring{
         this.showElm.innerHTML += ringHtml;
         this.elm = document.getElementById(this.getId());
 
+        this.style = this.elm.style;
+
         //描画サイズを引数で指定されたサイズに変更
-        this.setWidth(width);
-        this.setHeight(height);
+        this.setSize(width, height);
 
         //引数で指定された座標に描画
-        this.setPosition(x, y);
+        this.moveTo(x, y);
     }
 
     setColor(color) {
-        this.elm.src = ringImgPaths[color];
+        elm.src = ringImgPaths[color];
     }
 
     getId(){
         return `ring${this.id}`;
     }
-
-    setX(x){
-        this.elm.style.left = x + "px";
-    }
     
-    setY(y){
-        this.elm.style.top = y + "px";
-    }
-
-    setPosition(x, y){
-        this.setX(x);
-        this.setY(y);
-    }
-
-
-    setWidth(width){
-        this.elm.style.width = width + "px";
-    }
-    
-    setHeight(height){
-        this.elm.style.height = height + "px";
+    setSize(width=parseInt(this.style.width), height=parseInt(this.style.height)){
+        this.style.width = width + "px";
+        this.style.height = height + "px";
     }
 
     moveToGround(){
         this.setY(this.showElm.clientHeight - this.elm.clientHeight);
     }
 
+    move(x=0, y=0){
+        this.style.position = "relative";
+        this.style.left = parseInt(this.style.left) + x + "px"; 
+        this.style.top = parseInt(this.style.top) +  y + "px";
+        this.style.position = "absolute";
+    }
+
+    moveTo(x=parseInt(this.style.left), y=parseInt(this.style.top)){
+        this.x = x;
+        this.style.left = x + "px";
+
+        this.y = y;
+        this.style.top = y + "px";
+    }
 }
