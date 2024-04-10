@@ -1,5 +1,5 @@
 #gameDisplay {
-    width: 90%;
+    width: 50%;
     height: 600px;
     border: solid #000 2px;
     margin-left: auto;
@@ -36,4 +36,9 @@
 #Ope{
     text-indent: 5%;
     line-height: 0.8;
+}
+
+#ad{
+    text-align: center;
+    padding-bottom: 3rem;
 }
