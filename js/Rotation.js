@@ -1,8 +1,10 @@
 //gameDisplayが回転するようにはなった
 // がゲーム画面がいろいろめり込む
 // gameDisp;ayの配置を調節すれば解決するがとりあえず何もしていない
-// マウスホイールクリックで回転するか否か決められるようになった
+// マウスホイールクリックまたはスペースキーで回転するか否か決められるようになった
 // Ctrlキーでも動かせるようになった
+// スペースキーを押すとボールがジャンプする…
+// エンターキーに変えてみたが結局ボールがジャンプするので現状はスペースキー
 
 const square = document.getElementById('gameDisplay');
 const rotationSpeed = 1; // 回転速度の調節係数
@@ -38,17 +40,20 @@ document.addEventListener('mousemove', (event) => {
     square.style.transform = `translate(0%, 0%) rotate(${rotation}deg)`;
 
     // ただのログ
-    // console.log(`現在の回転角度: ${rotation}度`);
+    console.log(`現在の回転角度: ${rotation}度`);
 });
 
 // キーボードの回転操作
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Control') { // Ctrlキーが押された場合
-        if (event.location === 1) { // 左Ctrlキー
-            rotationDirection = -1; // 左に回転する
-        } else if (event.location === 2) { // 右Ctrlキー
-            rotationDirection = 1; // 右に回転する
-        }
+    if (event.code === 'ControlLeft') { // 左Ctrlキーが押された場合
+        rotationDirection = -1; // 左に回転する
+    } else if (event.code === 'ControlRight') { // 右Ctrlキーが押された場合
+        rotationDirection = 1; // 右に回転する
+    }
+
+    if (event.code === 'Space') { // スペースキーが押された場合
+        rotationPaused = !rotationPaused; // 回転の一時停止状態を切り替える
+        console.log(`回転が${rotationPaused ? '一時停止' : '再開'}されました`);
     }
 });
 
