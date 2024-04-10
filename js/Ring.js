@@ -14,8 +14,6 @@ class Ring{
         this.showElm.innerHTML += ringHtml;
         this.elm = document.getElementById(this.getId());
 
-        this.style = this.elm.style;
-
         //描画サイズを引数で指定されたサイズに変更
         this.setSize(width, height);
 
@@ -31,9 +29,9 @@ class Ring{
         return `ring${this.id}`;
     }
     
-    setSize(width=parseInt(this.style.width), height=parseInt(this.style.height)){
-        this.style.width = width + "px";
-        this.style.height = height + "px";
+    setSize(width=parseInt(this.elm.style.width), height=parseInt(this.elm.style.height)){
+        this.elm.style.width = width + "px";
+        this.elm.style.height = height + "px";
     }
 
     moveToGround(){
@@ -41,17 +39,33 @@ class Ring{
     }
 
     move(x=0, y=0){
-        this.style.position = "relative";
-        this.style.left = parseInt(this.style.left) + x + "px"; 
-        this.style.top = parseInt(this.style.top) +  y + "px";
-        this.style.position = "absolute";
+        this.elm.style.position = "relative";
+        this.elm.style.left = parseInt(this.elm.style.left) + x + "px"; 
+        this.elm.style.top = parseInt(this.elm.style.top) +  y + "px";
+        this.elm.style.position = "absolute";
+
+        const leftInt = parseInt(this.elm.style.left)
+        const showElmWidth = parseInt(this.showElm.clientWidth)
+        const topInt = parseInt(this.elm.style.top)
+        const showElmHeight = parseInt(this.showElm.clientHeight)
+
+        //ゲーム画面からはみ出していたら、はみ出さないようにする
+        if(leftInt < 0) this.elm.style.left = "0px"; //左端
+        else if(leftInt > showElmWidth) this.elm.style.left = showElmWidth + "px"; //右端
+        else if(topInt < 0) this.elm.style.top = "0px"; //上端
+        else if(topInt > showElmHeight) this.elm.style.top = showElmHeight + "px"; // 下端
+
     }
 
-    moveTo(x=parseInt(this.style.left), y=parseInt(this.style.top)){
+    moveTo(x=parseInt(this.elm.style.left), y=parseInt(this.elm.style.top)){
         this.x = x;
-        this.style.left = x + "px";
+        this.elm.style.left = x + "px";
 
         this.y = y;
-        this.style.top = y + "px";
+        this.elm.style.top = y + "px";
+    }
+
+    moveToTakeTime(toX, toY, takeTime){ //takeTimeはmsで指定
+        //実装中
     }
 }

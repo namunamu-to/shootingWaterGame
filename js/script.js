@@ -12,9 +12,14 @@ function pushOutWaterFlow(distance=100, weight="50"){
 }
 
 //作成中
-//左クリックで左半分の画面側から水流出す
-document.addEventListener("click", (e)=>{
+//左クリックで左半分のリングを右上方向に吹き飛ばす
+function blowRing(){
+    ring.moveTo(5, 5);
     console.log("aaa");
+}
+document.addEventListener("click", (e)=>{
+    // for(let i = 0; 0<40; i++) setTimeout(blowRing, 3);
+    
 
 });
 
@@ -26,5 +31,9 @@ document.addEventListener("contextmenu", ()=>{
 
 
 //ボールを落下させ続ける
+function fallRing(){
+    ring.move(0, 3);
+}
+setInterval(fallRing, 11);
 
 
