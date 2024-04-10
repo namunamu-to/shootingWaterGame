@@ -21,9 +21,13 @@ class Ring {
         this.moveTo(x, y);
 
         //ボールを落下させ続ける
-
         setInterval(() => {
-            ring.move(0, 2);
+            this.move(0, 2);
+        }, 8);
+
+        //傾きに応じてx座標をずらす
+        setInterval(() => {
+            this.move(parseInt(currentRotation / 10), 0);
         }, 8);
     }
 
