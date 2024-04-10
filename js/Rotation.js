@@ -1,6 +1,6 @@
 //gameDisplayが回転するようにはなった
 // がゲーム画面がいろいろめり込む
-// gameDisp;ayの配置を調節すれば解決するがとりあえず
+// gameDisp;ayの配置を調節すれば解決するがとりあえず何もしていない
 
 const square = document.getElementById('gameDisplay');
 const rotationSpeed = 2; // 回転速度の調節係数
