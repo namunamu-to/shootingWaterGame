@@ -23,12 +23,27 @@ document.addEventListener("click", (e)=>{
 
 });
 
+//左シフトキー
+document.addEventListener("keydown", (e) => {
+    if (e.code === "ShiftLeft") {
+        console.log("AAA");
+    }
+});
+
 //作成中
 //右クリックで右半分の画面側から水流出す
 document.addEventListener("contextmenu", ()=>{
     console.log("bbb");
 });
 
+//右シフトキー
+//自分のキーボードだと右シフトキーを判別してくれない？
+//自分の右シフトキー自体は羽後kので入手していない？
+document.addEventListener("keydown", (e) => {
+    if (e.code === "ShiftRight") {
+        console.log("BBB");
+    }
+});
 
 //ボールを落下させ続ける
 function fallRing(){
