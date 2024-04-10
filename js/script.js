@@ -15,9 +15,10 @@ function pushOutWaterFlow(distance = 100, weight = "50") {
 //左クリックで左半分のリングを右上方向に吹き飛ばす
 function blowRing() {
     ring.moveTo(5, 5);
-    console.log("aaa");
+    console.log("aaa"); //現状ログ出てこない
 }
 document.addEventListener("click", (e) => {
+    //console.log("aaa");  //ここにあればさすがにログが出てくる
     // for(let i = 0; 0<40; i++) setTimeout(blowRing, 3);
 });
 
@@ -27,7 +28,7 @@ document.addEventListener("contextmenu", () => {
     console.log("bbb");
 });
 
-//左シフトキー
+//シフトキー
 document.addEventListener("keydown", (e) => {
     if (e.code === "ShiftLeft") { //左シフト
         console.log("AAA");
@@ -36,10 +37,10 @@ document.addEventListener("keydown", (e) => {
         console.log("BBB");
     }
 
-    console.log("e.code = " + e.code);
-    console.log("e.location = " + e.location);
-    console.log("KeyboardEvent.DOM_KEY_LOCATION_LEFT = " + KeyboardEvent.DOM_KEY_LOCATION_LEFT);
-    console.log("KeyboardEvent.DOM_KEY_LOCATION_RIGHT = " + KeyboardEvent.DOM_KEY_LOCATION_RIGHT);
+    // console.log("e.code = " + e.code);
+    // console.log("e.location = " + e.location);
+    // console.log("KeyboardEvent.DOM_KEY_LOCATION_LEFT = " + KeyboardEvent.DOM_KEY_LOCATION_LEFT);
+    // console.log("KeyboardEvent.DOM_KEY_LOCATION_RIGHT = " + KeyboardEvent.DOM_KEY_LOCATION_RIGHT);
 
 });
 
