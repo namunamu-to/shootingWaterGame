@@ -4,7 +4,7 @@
 
 const square = document.getElementById('gameDisplay');
 const rotationSpeed = 2; // 回転速度の調節係数
-const maxRotation = 10; // 最大回転角度
+const maxRotation = 30; // 最大回転角度
 
 document.addEventListener('mousemove', (event) => {
     const mouseX = event.clientX;
@@ -27,5 +27,5 @@ document.addEventListener('mousemove', (event) => {
     square.style.transform = `translate(0%, 0%) rotate(${rotation}deg)`;
 
     // ただのログ
-    console.log(`現在の回転角度: ${rotation}度`);
+    // console.log(`現在の回転角度: ${rotation}度`);
 });

@@ -1,6 +1,6 @@
 const ring = new Ring("gameDisplay", "100", "100");
 // ring.moveToGround();
-ring.move(100, 100);
+ring.move(100, 300);
 
 //右クリック時にコンテキストメニューを表示させないようにする
 gameDisplay.addEventListener("contextmenu", () => { return false });
@@ -28,19 +28,20 @@ document.addEventListener("contextmenu", () => {
 
 document.addEventListener("keydown", (e) => {
     if (e.code === "ShiftLeft") { //左シフト
-        ring.repeatMove(40, -40, 1, 10);
+        ring.repeatMove(20, -20, 1, 15);
     }
+    
     if (e.location == 0) { //右シフト
-        ring.repeatMove(-40, -40, 1, 10);
+        ring.repeatMove(-20, -20, 10, 10);
     }
 });
 
 
 //ボールを落下させ続ける
 function fallRing() {
-    ring.move(0, 5);
+    ring.move(0, 2);
 }
-setInterval(fallRing, 16);
+setInterval(fallRing, 8);
 
 
 

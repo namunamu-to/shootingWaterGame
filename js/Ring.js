@@ -34,28 +34,40 @@ class Ring {
         this.elm.style.height = height + "px";
     }
 
-    //ゲーム画面からはみ出していたら、はみ出さないようにする
-    restoreFromMoveOut() {
+    //どこの側面にいるか
+    whichSide() {
         const leftInt = parseInt(this.elm.style.left)
         const showElmWidth = parseInt(this.showElm.clientWidth)
         const topInt = parseInt(this.elm.style.top)
         const showElmHeight = parseInt(this.showElm.clientHeight)
 
-        if (leftInt < 0) this.elm.style.left = "0px"; //左端
-        else if (leftInt > showElmWidth) this.elm.style.left = showElmWidth + "px"; //右端
-        else if (topInt < 0) this.elm.style.top = "0px"; //上端
-        else if (topInt > showElmHeight) this.elm.style.top = showElmHeight + "px"; // 下端
+        let nowSide = { "top": false, "bottom": false, "right": false, "left": false };
+        nowSide["left"] = leftInt < 0; //左端
+        nowSide["right"] = leftInt > showElmWidth; //右端
+        nowSide["top"] = topInt < 0; //上端
+        nowSide["bottom"] = topInt > showElmHeight; //下端
+
+        return nowSide;
     }
 
-    moveToGround() {
-        this.setY(this.showElm.clientHeight - this.elm.clientHeight);
+    //ゲーム画面からはみ出していたら、はみ出さないようにする
+    restoreFromMoveOut() {
+        const nowSide = this.whichSide();
+        const showElmWidth = parseInt(this.showElm.clientWidth)
+        const showElmHeight = parseInt(this.showElm.clientHeight)
+
+        if (nowSide["left"]) this.elm.style.left = "0px"; //左端
+        else if (nowSide["right"]) this.elm.style.left = showElmWidth + "px"; //右端
+        else if (nowSide["top"]) this.elm.style.top = "0px"; //上端
+        else if (nowSide["bottom"]) this.elm.style.top = showElmHeight + "px"; // 下端
     }
 
-    move(x = 0, y = 0) {
+    move(x = 0, y = 0) {        
         this.elm.style.position = "relative";
         this.elm.style.left = parseInt(this.elm.style.left) + x + "px";
         this.elm.style.top = parseInt(this.elm.style.top) + y + "px";
         this.elm.style.position = "absolute";
+
 
         this.restoreFromMoveOut();
     }
@@ -74,6 +86,7 @@ class Ring {
         let count = 0;
         const xIntervalId = setInterval(() => {
             this.move(oneMoveAmmountX, oneMoveAmmountY);
+
             count++;
             if (count == numberOfMove) clearInterval(xIntervalId);
         }, interval);
