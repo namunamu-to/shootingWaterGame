@@ -1,9 +1,9 @@
 let createdNum = 0;
-const ringImgPaths = {"red" : "./img/redRing.png", "blue" : "./img/blueRing.png"} 
+const ringImgPaths = { "red": "./img/redRing.png", "blue": "./img/blueRing.png" }
 
 
-class Ring{
-    constructor(showToElmId, x=0, y=0, width=40, height=40, color="red"){
+class Ring {
+    constructor(showToElmId, x = 0, y = 0, width = 40, height = 40, color = "red") {
         this.id = ++createdNum;
         this.x = x;
         this.y = y;
@@ -25,39 +25,42 @@ class Ring{
         elm.src = ringImgPaths[color];
     }
 
-    getId(){
+    getId() {
         return `ring${this.id}`;
     }
-    
-    setSize(width=parseInt(this.elm.style.width), height=parseInt(this.elm.style.height)){
+
+    setSize(width = parseInt(this.elm.style.width), height = parseInt(this.elm.style.height)) {
         this.elm.style.width = width + "px";
         this.elm.style.height = height + "px";
     }
 
-    moveToGround(){
-        this.setY(this.showElm.clientHeight - this.elm.clientHeight);
-    }
-
-    move(x=0, y=0){
-        this.elm.style.position = "relative";
-        this.elm.style.left = parseInt(this.elm.style.left) + x + "px"; 
-        this.elm.style.top = parseInt(this.elm.style.top) +  y + "px";
-        this.elm.style.position = "absolute";
-
+    //ゲーム画面からはみ出していたら、はみ出さないようにする
+    restoreFromMoveOut() {
         const leftInt = parseInt(this.elm.style.left)
         const showElmWidth = parseInt(this.showElm.clientWidth)
         const topInt = parseInt(this.elm.style.top)
         const showElmHeight = parseInt(this.showElm.clientHeight)
 
-        //ゲーム画面からはみ出していたら、はみ出さないようにする
-        if(leftInt < 0) this.elm.style.left = "0px"; //左端
-        else if(leftInt > showElmWidth) this.elm.style.left = showElmWidth + "px"; //右端
-        else if(topInt < 0) this.elm.style.top = "0px"; //上端
-        else if(topInt > showElmHeight) this.elm.style.top = showElmHeight + "px"; // 下端
-
+        if (leftInt < 0) this.elm.style.left = "0px"; //左端
+        else if (leftInt > showElmWidth) this.elm.style.left = showElmWidth + "px"; //右端
+        else if (topInt < 0) this.elm.style.top = "0px"; //上端
+        else if (topInt > showElmHeight) this.elm.style.top = showElmHeight + "px"; // 下端
     }
 
-    moveTo(x=parseInt(this.elm.style.left), y=parseInt(this.elm.style.top)){
+    moveToGround() {
+        this.setY(this.showElm.clientHeight - this.elm.clientHeight);
+    }
+
+    move(x = 0, y = 0) {
+        this.elm.style.position = "relative";
+        this.elm.style.left = parseInt(this.elm.style.left) + x + "px";
+        this.elm.style.top = parseInt(this.elm.style.top) + y + "px";
+        this.elm.style.position = "absolute";
+
+        this.restoreFromMoveOut();
+    }
+
+    moveTo(x = parseInt(this.elm.style.left), y = parseInt(this.elm.style.top)) {
         this.x = x;
         this.elm.style.left = x + "px";
 
@@ -65,7 +68,14 @@ class Ring{
         this.elm.style.top = y + "px";
     }
 
-    moveToTakeTime(toX, toY, takeTime){ //takeTimeはmsで指定
-        //実装中
+    //指定された時間をかけて指定された移動量を移動する
+    //実装中
+    repeatMove(oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMove) { //takeTimeはmsで指定
+        let count = 0;
+        const xIntervalId = setInterval(() => {
+            this.move(oneMoveAmmountX, oneMoveAmmountY);
+            count++;
+            if (count == numberOfMove) clearInterval(xIntervalId);
+        }, interval);
     }
 }

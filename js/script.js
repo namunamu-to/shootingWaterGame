@@ -15,39 +15,32 @@ function pushOutWaterFlow(distance = 100, weight = "50") {
 //左クリックで左半分のリングを右上方向に吹き飛ばす
 function blowRing() {
     ring.moveTo(5, 5);
-    console.log("aaa");
 }
 document.addEventListener("click", (e) => {
-    // for(let i = 0; 0<40; i++) setTimeout(blowRing, 3);
+    ring.repeatMove(40, -40, 1, 10);
 });
 
 //作成中
 //右クリックで右半分の画面側から水流出す
 document.addEventListener("contextmenu", () => {
-    console.log("bbb");
+    ring.repeatMove(-40, -40, 1, 10);
 });
 
-//左シフトキー
 document.addEventListener("keydown", (e) => {
     if (e.code === "ShiftLeft") { //左シフト
-        console.log("AAA");
+        ring.repeatMove(40, -40, 1, 10);
     }
     if (e.location == 0) { //右シフト
-        console.log("BBB");
+        ring.repeatMove(-40, -40, 1, 10);
     }
-
-    console.log("e.code = " + e.code);
-    console.log("e.location = " + e.location);
-    console.log("KeyboardEvent.DOM_KEY_LOCATION_LEFT = " + KeyboardEvent.DOM_KEY_LOCATION_LEFT);
-    console.log("KeyboardEvent.DOM_KEY_LOCATION_RIGHT = " + KeyboardEvent.DOM_KEY_LOCATION_RIGHT);
-
 });
 
 
 //ボールを落下させ続ける
 function fallRing() {
-    ring.move(0, 3);
+    ring.move(0, 5);
 }
-setInterval(fallRing, 11);
+setInterval(fallRing, 16);
+
 
 
