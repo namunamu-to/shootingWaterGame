@@ -19,6 +19,12 @@ class Ring {
 
         //引数で指定された座標に描画
         this.moveTo(x, y);
+
+        //ボールを落下させ続ける
+
+        setInterval(() => {
+            ring.move(0, 2);
+        }, 8);
     }
 
     setColor(color) {
@@ -62,7 +68,7 @@ class Ring {
         else if (nowSide["bottom"]) this.elm.style.top = showElmHeight + "px"; // 下端
     }
 
-    move(x = 0, y = 0) {        
+    move(x = 0, y = 0) {
         this.elm.style.position = "relative";
         this.elm.style.left = parseInt(this.elm.style.left) + x + "px";
         this.elm.style.top = parseInt(this.elm.style.top) + y + "px";
@@ -81,8 +87,7 @@ class Ring {
     }
 
     //指定された時間をかけて指定された移動量を移動する
-    //実装中
-    repeatMove(oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMove) { //takeTimeはmsで指定
+    repeatMove(oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMove) { //intervalはmsで指定
         let count = 0;
         const xIntervalId = setInterval(() => {
             this.move(oneMoveAmmountX, oneMoveAmmountY);

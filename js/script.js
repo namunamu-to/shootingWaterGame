@@ -17,31 +17,24 @@ function blowRing() {
     ring.moveTo(5, 5);
 }
 document.addEventListener("click", (e) => {
-    ring.repeatMove(40, -40, 1, 10);
+    ring.repeatMove(10, -10, 1, 25);
 });
 
 //作成中
 //右クリックで右半分の画面側から水流出す
 document.addEventListener("contextmenu", () => {
-    ring.repeatMove(-40, -40, 1, 10);
+    ring.repeatMove(-10, -10, 1, 25);
 });
 
 document.addEventListener("keydown", (e) => {
     if (e.code === "ShiftLeft") { //左シフト
-        ring.repeatMove(20, -20, 1, 15);
+        ring.repeatMove(10, -10, 1, 25);
     }
     
     if (e.location == 0) { //右シフト
-        ring.repeatMove(-20, -20, 10, 10);
+        ring.repeatMove(-10, -10, 10, 25);
     }
 });
-
-
-//ボールを落下させ続ける
-function fallRing() {
-    ring.move(0, 2);
-}
-setInterval(fallRing, 8);
 
 
 
