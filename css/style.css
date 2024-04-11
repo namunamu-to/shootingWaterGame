@@ -7,9 +7,6 @@
     background:url('../img/bg_natural_ocean.jpg');
     background-size: cover; /* 背景画像を要素内に収める */
     background-position: center; /* 背景画像の表示位置を中央に設定 */
-    /* display: flex;
-    justify-content: space-around;
-    flex-direction: row; */
 }
 
 .lingTossPole {
@@ -23,14 +20,11 @@
 }
 
 /* ポールのレイアウトが画面サイズによって変動しすぎていたのでそれっぽい感じに手を入れた */
-
 #leftLingTossPole {
-    /* left: 250px; */ 
     left :30%;
 }
 
 #rightLingTossPole {
-    /* left: 700px */
     left:70%;
 }
 

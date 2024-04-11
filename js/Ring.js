@@ -97,6 +97,5 @@ class Ring {
             console.log(this.elm.style.top);
             console.log(this.elm.style.left);
         }, interval);
-        // console.log(xIntervalId);
     }
 }
