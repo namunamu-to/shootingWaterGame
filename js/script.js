@@ -48,14 +48,6 @@ document.addEventListener("keydown", (e) => {
 
     }
     
-    if (e.location == 0) { //右シフト
-        ring.repeatMove(-10, -10, 10, 25);
-
-            //SE用
-    clickSound.currentTime = 0; 
-    clickSound.play();
-
-    }
 });
 
 
