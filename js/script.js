@@ -1,11 +1,13 @@
 let rings = [];
 
 //リングの生成
+const ringWidth = 40;
+const ringHeight = 40;
 for(let i=0; i<1; i++){
-    const randomX = parseInt(Math.random() * parseInt(gameDisplay.clientWidth)); //0～gameDIsplayの横幅の範囲でランダム
-    const romdomY = parseInt(Math.random() * parseInt(gameDisplay.clientHeight)); //0～gameDIsplay縦幅の範囲でランダム
-    rings.push(new Ring("gameDisplay", randomX, romdomY, width=40, height=40, color="red"));
-    rings.push(new Ring("gameDisplay", randomX, romdomY, width=40, height=40, color="blue"));
+    const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
+    const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
+    rings.push(new Ring("gameDisplay", randomX, romdomY, width=ringWidth, height=ringHeight, color="red"));
+    rings.push(new Ring("gameDisplay", randomX, romdomY, width=ringWidth, height=ringHeight, color="blue"));
 }
 
 const clickSound = document.getElementById('btn_audio');
