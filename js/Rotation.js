@@ -15,6 +15,9 @@ let rotationDirection = 0; // 回転方向を表す変数
 let currentRotation = 0; // 現在の回転角度を保持する変数
 let rotationPaused = false; // 回転が一時停止されているかを表すフラグ
 
+const roteONSound = document.getElementById('RoteON');
+const roteOFFSound = document.getElementById('RoteOFF');
+
 // マウスカーソルでの四角の動作
 document.addEventListener('mousemove', (event) => {
     // 回転が無効化されている場合または一時停止されている場合、処理を終了する
@@ -53,8 +56,14 @@ document.addEventListener('keydown', (event) => {
     }
 
     if (event.code === 'Space') { // スペースキーが押された場合
-        rotationPaused = !rotationPaused; // 回転の一時停止状態を切り替える
-        console.log(`回転が${rotationPaused ? '一時停止' : '再開'}されました`);
+        rotationPaused = !rotationPaused; // 回転の一時停止状態をトグル
+        if (rotationPaused) {
+            roteOFFSound.currentTime = 0;
+            roteOFFSound.play();
+        } else {
+            roteONSound.currentTime = 0;
+            roteONSound.play();
+        }
     }
 });
 
@@ -68,7 +77,13 @@ document.addEventListener('keyup', (event) => {
 document.addEventListener('mousedown', (event) => {
     if (event.button === 1) { // マウスホイールがクリックされた場合
         rotationPaused = !rotationPaused; // 回転の一時停止をトグル
-        console.log(`回転が${rotationPaused ? '一時停止' : '再開'}されました`);
+        if (rotationPaused) {
+            roteOFFSound.currentTime = 0;
+            roteOFFSound.play();
+        } else {
+            roteONSound.currentTime = 0;
+            roteONSound.play();
+        }
     }
 });
 
