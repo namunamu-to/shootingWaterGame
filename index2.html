@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>hanekaeru</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <style>
+        div.container {
+            position: absolute;
+            width: fit-content;
+            background-color: rgb(212, 239, 30);
+            text-align: center;
+        }
+    </style>
+
+    <div id="gameDisplay" concontextmenu="return false;">
+        <span id="leftLingTossPole" class="lingTossPole"></span>
+        <span id="rightLingTossPole" class="lingTossPole"></span>
+    </div>
+    <input type="button" value="作成" onclick="create()">
+
+    <audio id="btn_audio" src="./SE/ButtonSE.mp3"></audio>
+    <audio id="RoteON" src="./SE/rotaON.mp3"> </audio>
+    <audio id="RoteOFF" src="./SE/rotaOFF.mp3"> </audio>
+
+    <script>
+
+        function create() {
+            var x = Math.floor(Math.random() * 800);
+            var y = Math.floor(Math.random() * 800);
+            var dx = 5 + Math.floor(Math.random() * 30);
+            var dy = 5 + Math.floor(Math.random() * 30);
+            var m = new mmm(x, y, '□', dx, dy);
+        }
+
+        function mmm(x, y, val, dx, dy) {
+            var element = document.createElement('div');
+            element.className = 'container';
+            element.innerHTML = val;
+            element.style.left = x + 'px';
+            element.style.top = y + 'px';
+            element.px = x;
+            element.py = y;
+            element.xDir = 1;
+            element.yDir = -1;
+            document.getElementById('gameDisplay').appendChild(element);
+            setInterval(() => {
+                if ((element.xDir == -1 && element.px <= 0) || (element.xDir == 1 && element.px >= 800)) {
+                    element.xDir *= -1;
+                }
+                if ((element.yDir == -1 && element.py <= 0) || (element.yDir == 1 && element.py >= 800)) {
+                    element.yDir *= -1;
+                }
+                element.px += element.xDir * dx;
+                element.py += element.yDir * dy;
+                element.style.left = element.px + 'px';
+                element.style.top = element.py + 'px';
+            }, 30);
+        }
+
+    </script>
+</body>
+
+</html>

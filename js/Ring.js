@@ -16,14 +16,15 @@ class Ring {
         this.setSize(width, height);
 
         //引数で指定された座標に描画
-        this.moveTo(x, y);
+        this.elm.style.left = x + "px";
+        this.elm.style.top = y + "px";
 
         //ボールを落下させ続ける
         setInterval(() => {
             this.move(0, 2);
-        }, 8);
+        }, 8 + this.id);
 
-        //傾きに応じてx座標をずらす
+        // //傾きに応じてx座標をずらす
         setInterval(() => {
             this.move(parseInt(currentRotation / 10), 0);
         }, 20);
@@ -78,11 +79,6 @@ class Ring {
         this.elm.style.position = "absolute";
 
         this.restoreFromMoveOut();
-    }
-    //引数で指定された座標に移動
-    moveTo(x = parseInt(this.elm.style.left), y = parseInt(this.elm.style.top)) {
-        this.elm.style.left = x + "px";
-        this.elm.style.top = y + "px";
     }
 
     //指定された時間をかけて指定された移動量を移動する

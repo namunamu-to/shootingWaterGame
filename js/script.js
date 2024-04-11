@@ -10,6 +10,12 @@ for(let i=0; i<1; i++){
     rings.push(new Ring("gameDisplay", randomX, romdomY, width=ringWidth, height=ringHeight, color="blue"));
 }
 
+setInterval(()=>{
+    for(let i=0; i<rings.length; i++){
+        
+    }
+}, 20)
+
 const clickSound = document.getElementById('btn_audio');
 
 // 音声再生速度を調整する関数
@@ -31,7 +37,6 @@ function blowRing(fromDirection) {
             rings[i].repeatMove(-10, -10, 1, 25);
         }
     }
-
 
     //SE用
     clickSound.currentTime = 0;
