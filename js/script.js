@@ -1,4 +1,6 @@
-const ring = new Ring("gameDisplay", "300", "100");
+const randomX = parseInt(Math.random() * parseInt(gameDisplay.clientWidth)); //0～gameDIsplayの横幅の範囲でランダム
+const romdomY = parseInt(Math.random() * parseInt(gameDisplay.clientHeight)); //0～gameDIsplay縦幅の範囲でランダム
+const ring = new Ring("gameDisplay", randomX, romdomY);
 const clickSound = document.getElementById('btn_audio');
 
 // 音声再生速度を調整する関数
