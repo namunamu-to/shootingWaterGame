@@ -1,15 +1,13 @@
-let createdNum = 0;
-const ringImgPaths = { "red": "./img/redRing.png", "blue": "./img/blueRing.png" }
-
-
 class Ring {
+    static ringImgPaths = { "red": "./img/redRing.png", "blue": "./img/blueRing.png" }
+    static createdNum = 0;
     constructor(showToElmId, x = 0, y = 0, width = 40, height = 40, color = "red") {
-        this.id = ++createdNum;
+        this.id = ++Ring.createdNum;
         this.x = x;
         this.y = y;
 
         //サークル画像の要素作り、引数で指定された要素に追加
-        let ringHtml = `<img id="${this.getId()}" class="ring" style="position: absolute;" src="${ringImgPaths[color]}">`;
+        let ringHtml = `<img id="${this.getId()}" class="ring" style="position: absolute;" src="${Ring.ringImgPaths[color]}">`;
         this.showElm = document.getElementById(showToElmId); //表示先の要素
         this.showElm.innerHTML += ringHtml;
         this.elm = document.getElementById(this.getId());
@@ -32,7 +30,7 @@ class Ring {
     }
 
     setColor(color) {
-        elm.src = ringImgPaths[color];
+        elm.src = Ring.ringImgPaths[color];
     }
 
     getId() {
@@ -72,6 +70,7 @@ class Ring {
         else if (nowSide["bottom"]) this.elm.style.top = (showElmHeight - parseInt(this.elm.clientHeight)) + "px"; // 下端
     }
 
+    //引数で指定された分だけ移動
     move(x = 0, y = 0) {
         this.elm.style.position = "relative";
         this.elm.style.left = parseInt(this.elm.style.left) + x + "px";
@@ -80,12 +79,9 @@ class Ring {
 
         this.restoreFromMoveOut();
     }
-
+    //引数で指定された座標に移動
     moveTo(x = parseInt(this.elm.style.left), y = parseInt(this.elm.style.top)) {
-        this.x = x;
         this.elm.style.left = x + "px";
-
-        this.y = y;
         this.elm.style.top = y + "px";
     }
 
@@ -94,9 +90,13 @@ class Ring {
         let count = 0;
         const xIntervalId = setInterval(() => {
             this.move(oneMoveAmmountX, oneMoveAmmountY);
-
             count++;
             if (count == numberOfMove) clearInterval(xIntervalId);
+            console.log(this.getId());
+            console.log(this.elm.style.position);
+            console.log(this.elm.style.top);
+            console.log(this.elm.style.left);
         }, interval);
+        // console.log(xIntervalId);
     }
 }
