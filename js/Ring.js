@@ -92,10 +92,6 @@ class Ring {
             this.move(oneMoveAmmountX, oneMoveAmmountY);
             count++;
             if (count == numberOfMove) clearInterval(xIntervalId);
-            console.log(this.getId());
-            console.log(this.elm.style.position);
-            console.log(this.elm.style.top);
-            console.log(this.elm.style.left);
         }, interval);
     }
 }

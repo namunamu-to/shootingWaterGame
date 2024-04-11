@@ -7,6 +7,7 @@
     background:url('../img/bg_natural_ocean.jpg');
     background-size: cover; /* 背景画像を要素内に収める */
     background-position: center; /* 背景画像の表示位置を中央に設定 */
+    position: relative;
 }
 
 .lingTossPole {
