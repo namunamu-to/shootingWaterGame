@@ -53,9 +53,9 @@ class Ring {
 
         let nowSide = { "top": false, "bottom": false, "right": false, "left": false };
         nowSide["left"] = leftInt < 0; //左端
-        nowSide["right"] = leftInt > showElmWidth; //右端
+        nowSide["right"] = leftInt > showElmWidth - parseInt(this.elm.clientWidth); //右端
         nowSide["top"] = topInt < 0; //上端
-        nowSide["bottom"] = topInt > showElmHeight; //下端
+        nowSide["bottom"] = topInt > showElmHeight - parseInt(this.elm.clientHeight); //下端
 
         return nowSide;
     }
@@ -67,9 +67,9 @@ class Ring {
         const showElmHeight = parseInt(this.showElm.clientHeight)
 
         if (nowSide["left"]) this.elm.style.left = "0px"; //左端
-        else if (nowSide["right"]) this.elm.style.left = showElmWidth + "px"; //右端
+        else if (nowSide["right"]) this.elm.style.left = (showElmWidth - parseInt(this.elm.clientWidth)) + "px"; //右端
         else if (nowSide["top"]) this.elm.style.top = "0px"; //上端
-        else if (nowSide["bottom"]) this.elm.style.top = showElmHeight + "px"; // 下端
+        else if (nowSide["bottom"]) this.elm.style.top = (showElmHeight - parseInt(this.elm.clientHeight)) + "px"; // 下端
     }
 
     move(x = 0, y = 0) {
@@ -77,7 +77,6 @@ class Ring {
         this.elm.style.left = parseInt(this.elm.style.left) + x + "px";
         this.elm.style.top = parseInt(this.elm.style.top) + y + "px";
         this.elm.style.position = "absolute";
-
 
         this.restoreFromMoveOut();
     }
