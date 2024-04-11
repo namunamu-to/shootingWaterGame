@@ -28,7 +28,7 @@ class Ring {
         //傾きに応じてx座標をずらす
         setInterval(() => {
             this.move(parseInt(currentRotation / 10), 0);
-        }, 8);
+        }, 20);
     }
 
     setColor(color) {
