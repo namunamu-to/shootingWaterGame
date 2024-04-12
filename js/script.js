@@ -1,19 +1,4 @@
 const clickSound = document.getElementById('btn_audio');
-let rings = [];
-//リングの生成
-const ringWidth = 40;
-const ringHeight = 40;
-for (let i = 0; i < 8; i++) {
-    const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
-    const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
-    rings.push(createRing(randomX, romdomY, color = "blue"));
-}
-
-for (let i = 0; i < 8; i++) {
-    const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
-    const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
-    rings.push(createRing(randomX, romdomY, color = "red"));
-}
 
 
 

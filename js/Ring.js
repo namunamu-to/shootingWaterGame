@@ -1,4 +1,5 @@
 const showElm = document.getElementById("gameDisplay"); //表示先の要素
+let rings = [];
 const ringImgPaths = { "red": "./img/redRing.png", "blue": "./img/blueRing.png" }
 let createdNum = 0;
 
@@ -17,17 +18,16 @@ function createRing(x = 0, y = 0, color = "red") {
     elm.style.top = y + "px";
 
     //ボールを落下させ続ける
-    var Moverandom=1+Math.random();
+    var Moverandom = 1 + Math.random();
     setInterval(() => {
         move(elm, 0, Moverandom);
-    }, 8 + id);
-   
+    }, 8);
+
 
     // //傾きに応じてx座標をずらす
-
-     var Rotationrandom = Math.floor( Math.random() * 7 )+10;
+    var Rotationrandom = Math.floor(Math.random() * 7) + 10;
     setInterval(() => {
-        move(elm, parseInt(currentRotation / Rotationrandom ), 0);
+        move(elm, parseInt(currentRotation / Rotationrandom), 0);
     }, 20);
 
     return elm;
@@ -64,9 +64,13 @@ function restoreFromMoveOut(elm) {
 }
 
 //引数で指定された分だけ移動
+//進行方向に他のリングがあれば重ならないように移動
 function move(elm, x = 0, y = 0) {
     restoreFromMoveOut(elm);
 
+    //
+
+    //移動
     elm.style.position = "relative";
     elm.style.left = parseInt(elm.style.left) + x + "px";
     elm.style.top = parseInt(elm.style.top) + y + "px";
@@ -83,4 +87,20 @@ function repeatMove(elm, oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMov
         count++;
         if (count == numberOfMove) clearInterval(xIntervalId);
     }, interval);
+}
+
+
+//リングの生成
+const ringWidth = 40;
+const ringHeight = 40;
+for (let i = 0; i < 8; i++) {
+    const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
+    const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
+    rings.push(createRing(randomX, romdomY, color = "blue"));
+}
+
+for (let i = 0; i < 8; i++) {
+    const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
+    const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
+    rings.push(createRing(randomX, romdomY, color = "red"));
 }
