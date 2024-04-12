@@ -17,13 +17,17 @@ function createRing(x = 0, y = 0, color = "red") {
     elm.style.top = y + "px";
 
     //ボールを落下させ続ける
+    var Moverandom=1+Math.random();
     setInterval(() => {
-        move(elm, 0, 2);
+        move(elm, 0, Moverandom);
     }, 8 + id);
+   
 
     // //傾きに応じてx座標をずらす
+
+     var Rotationrandom = Math.floor( Math.random() * 7 )+10;
     setInterval(() => {
-        move(elm, parseInt(currentRotation / 10), 0);
+        move(elm, parseInt(currentRotation / Rotationrandom ), 0);
     }, 20);
 
     return elm;
