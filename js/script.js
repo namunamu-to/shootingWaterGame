@@ -20,7 +20,7 @@ function blowRing(fromDirection) {
     const quarterBoundsVirtical = gameDisplay.clientHeight / 4;
     const sectionHeight = gameDisplayHeight / 3;
     const sectionTopBoundaries = [sectionHeight, 2 * sectionHeight];
-  
+
 
     //各リングを吹き飛ばす
     for (let i = 0; i < rings.length; i++) {
@@ -48,6 +48,7 @@ function blowRing(fromDirection) {
                 repeatMove(rings[i], -10, -10, moveDistanceX, moveDistanceY);
             }
         }
+
     }
 
     //SE用
