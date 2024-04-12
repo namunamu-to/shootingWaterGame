@@ -1,81 +1,82 @@
-class Ring {
-    static ringImgPaths = { "red": "./img/redRing.png", "blue": "./img/blueRing.png" }
-    static createdNum = 0;
-    static showElm = document.getElementById("gameDisplay"); //表示先の要素
-    constructor(x = 0, y = 0, color = "red") {
-        this.id = ++Ring.createdNum;
+const showElm = document.getElementById("gameDisplay"); //表示先の要素
+const ringImgPaths = { "red": "./img/redRing.png", "blue": "./img/blueRing.png" }
+let createdNum = 0;
 
-        //サークル画像の要素作り、引数で指定された要素に追加
-        this.elm = document.createElement("img");
-        this.elm.setAttribute("class", "ring");
-        this.elm.setAttribute("id", this.id);
-        this.elm.setAttribute("src", Ring.ringImgPaths[color]);
-        Ring.showElm.appendChild(this.elm);
+function createRing(x = 0, y = 0, color = "red") {
+    id = ++createdNum;
 
-        //引数で指定された座標に描画
-        this.elm.style.left = x + "px";
-        this.elm.style.top = y + "px";
+    //サークル画像の要素作り、引数で指定された要素に追加
+    const elm = document.createElement("img");
+    elm.setAttribute("class", "ring");
+    elm.setAttribute("id", id);
+    elm.setAttribute("src", ringImgPaths[color]);
+    showElm.appendChild(elm);
 
-        //ボールを落下させ続ける
-        setInterval(() => {
-            this.move(0, 2);
-        }, 8 + this.id);
+    //引数で指定された座標に描画
+    elm.style.left = x + "px";
+    elm.style.top = y + "px";
 
-        // //傾きに応じてx座標をずらす
-        setInterval(() => {
-            this.move(parseInt(currentRotation / 10), 0);
-        }, 20);
-    }
+    //ボールを落下させ続ける
+    setInterval(() => {
+        move(elm, 0, 2);
+    }, 8 + id);
 
-    //どこの側面にいるか
-    whichSide() {
-        const leftInt = parseInt(this.elm.style.left)
-        const showElmWidth = parseInt(Ring.showElm.clientWidth)
-        const topInt = parseInt(this.elm.style.top)
-        const showElmHeight = parseInt(Ring.showElm.clientHeight)
+    // //傾きに応じてx座標をずらす
+    setInterval(() => {
+        move(elm, parseInt(currentRotation / 10), 0);
+    }, 20);
 
-        let nowSide = { "top": false, "bottom": false, "right": false, "left": false };
-        nowSide["left"] = leftInt < 0; //左端
-        nowSide["right"] = leftInt > showElmWidth - parseInt(this.elm.clientWidth); //右端
-        nowSide["top"] = topInt < 0; //上端
-        nowSide["bottom"] = topInt > showElmHeight - parseInt(this.elm.clientHeight); //下端
+    return elm;
+}
 
-        return nowSide;
-    }
+//どこの側面にいるか
+function whichSide(elm) {
+    const leftInt = parseInt(elm.style.left);
+    const showElmWidth = parseInt(showElm.clientWidth);
+    const topInt = parseInt(elm.style.top);
+    const showElmHeight = parseInt(showElm.clientHeight);
 
-    //ゲーム画面からはみ出していたら、はみ出さないようにする
-    restoreFromMoveOut() {
-        const nowSide = this.whichSide();
-        const showElmWidth = parseInt(Ring.showElm.clientWidth)
-        const showElmHeight = parseInt(Ring.showElm.clientHeight)
+    let nowSide = { "top": false, "bottom": false, "right": false, "left": false };
+    nowSide["left"] = leftInt < 0; //左端
+    nowSide["right"] = leftInt > showElmWidth - parseInt(elm.clientWidth); //右端
+    nowSide["top"] = topInt < 0; //上端
+    nowSide["bottom"] = topInt > showElmHeight - parseInt(elm.clientHeight); //下端
 
-        if (nowSide["left"]) this.elm.style.left = "0px"; //左端
-        else if (nowSide["right"]) this.elm.style.left = (showElmWidth - parseInt(this.elm.clientWidth)) + "px"; //右端
-        else if (nowSide["top"]) this.elm.style.top = "0px"; //上端
-        else if (nowSide["bottom"]) this.elm.style.top = (showElmHeight - parseInt(this.elm.clientHeight)) + "px"; // 下端
+    return nowSide;
+}
 
-        this.elm.style.zIndex = 1000 + this.id; //この行がないとringが表示されなくなる。
-    }
+//ゲーム画面からはみ出していたら、はみ出さないようにする
+function restoreFromMoveOut(elm) {
+    const nowSide = whichSide(elm);
+    const showElmWidth = parseInt(showElm.clientWidth);
+    const showElmHeight = parseInt(showElm.clientHeight);
 
-    //引数で指定された分だけ移動
-    move(x = 0, y = 0) {
-        this.restoreFromMoveOut();
+    if (nowSide["left"]) elm.style.left = "0px"; //左端
+    else if (nowSide["right"]) elm.style.left = (showElmWidth - parseInt(elm.clientWidth)) + "px"; //右端
+    else if (nowSide["top"]) elm.style.top = "0px"; //上端
+    else if (nowSide["bottom"]) elm.style.top = (showElmHeight - parseInt(elm.clientHeight)) + "px"; // 下端
 
-        this.elm.style.position = "relative";
-        this.elm.style.left = parseInt(this.elm.style.left) + x + "px";
-        this.elm.style.top = parseInt(this.elm.style.top) + y + "px";
-        this.elm.style.position = "absolute";
+    elm.style.zIndex = 1000 + id; //この行がないとringが表示されなくなる。
+}
 
-        this.restoreFromMoveOut();
-    }
+//引数で指定された分だけ移動
+function move(elm, x = 0, y = 0) {
+    restoreFromMoveOut(elm);
 
-    //指定された時間をかけて指定された移動量を移動する
-    repeatMove(oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMove) { //intervalはmsで指定
-        let count = 0;
-        const xIntervalId = setInterval(() => {
-            this.move(oneMoveAmmountX, oneMoveAmmountY);
-            count++;
-            if (count == numberOfMove) clearInterval(xIntervalId);
-        }, interval);
-    }
+    elm.style.position = "relative";
+    elm.style.left = parseInt(elm.style.left) + x + "px";
+    elm.style.top = parseInt(elm.style.top) + y + "px";
+    elm.style.position = "absolute";
+
+    restoreFromMoveOut(elm);
+}
+
+//指定された時間をかけて指定された移動量を移動する
+function repeatMove(elm, oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMove) { //intervalはmsで指定
+    let count = 0;
+    const xIntervalId = setInterval(() => {
+        move(elm, oneMoveAmmountX, oneMoveAmmountY);
+        count++;
+        if (count == numberOfMove) clearInterval(xIntervalId);
+    }, interval);
 }
