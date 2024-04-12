@@ -7,13 +7,13 @@ const ringHeight = 40;
 for(let i=0; i<1; i++){
     const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
     const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
-    rings.push(new Ring("gameDisplay", randomX, romdomY, color="blue"));
+    rings.push(new Ring(randomX, romdomY, color="blue"));
 }
 
 for(let i=0; i<1; i++){
     const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
     const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
-    rings.push(new Ring("gameDisplay", randomX, romdomY, color="red"));
+    rings.push(new Ring(randomX, romdomY, color="red"));
 }
 
 
