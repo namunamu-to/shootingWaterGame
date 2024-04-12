@@ -29,9 +29,13 @@ function adjustSoundSpeed(speed) {
 //引数は"right"か"Left"で指定
 function blowRing(fromDirection) {
     const gameDisplayWidth = gameDisplay.clientWidth;
+    const gameDisplayHeight = gameDisplay.clientHeight;
+
     const quarterBoundsBeside = gameDisplayWidth / 4;
     const quarterBoundsVirtical = gameDisplay.clientHeight / 4;
-
+    const sectionHeight = gameDisplayHeight / 3;
+    const sectionTopBoundaries = [sectionHeight, 2 * sectionHeight];
+  
 
     //各リングを吹き飛ばす
     for (let i = 0; i < rings.length; i++) {
@@ -39,11 +43,24 @@ function blowRing(fromDirection) {
         const ringTop = parseInt(rings[i].style.top);
         const isQuarterUnder = ringTop > quarterBoundsVirtical;
 
+        let moveDistanceX, moveDistanceY;
+
+        if (ringTop < sectionTopBoundaries[0]) {
+            moveDistanceX = 10;
+            moveDistanceY = 5;
+        } else if (ringTop >= sectionTopBoundaries[0] && ringTop < sectionTopBoundaries[1]) {
+            moveDistanceX = 5;
+            moveDistanceY = 15;
+        } else {
+            moveDistanceX = 3;
+            moveDistanceY = 25;
+        }
+
         if (isQuarterUnder) {
             if (fromDirection == "left" && ringLeft < gameDisplayWidth - quarterBoundsBeside) { //左から吹き飛ばす
-                repeatMove(rings[i], 10, -10, 1, 25);
+                repeatMove(rings[i], 10, -10, moveDistanceX, moveDistanceY);
             } else if (fromDirection == "right" && ringLeft > quarterBoundsBeside) { //右から吹き飛ばす
-                repeatMove(rings[i], -10, -10, 1, 25);
+                repeatMove(rings[i], -10, -10, moveDistanceX, moveDistanceY);
             }
         }
     }
