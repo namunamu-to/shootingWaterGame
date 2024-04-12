@@ -28,15 +28,26 @@ function adjustSoundSpeed(speed) {
 //ボールを吹き飛ばす関数
 //引数は"right"か"Left"で指定
 function blowRing(fromDirection) {
+    const gameDisplayWidth = gameDisplay.clientWidth;
+    const quarterBoundsBeside = gameDisplayWidth / 4;
+    const quarterBoundsVirtical = gameDisplay.clientHeight / 4;
+
+
+    //各リングを吹き飛ばす
     for (let i = 0; i < rings.length; i++) {
-        //吹き飛ばす
-        if (fromDirection == "left") {
-            repeatMove(rings[i], 10, -10, 1, 25);
-        } else if (fromDirection == "right") {
-            repeatMove(rings[i], -10, -10, 1, 25);
+        const ringLeft = parseInt(rings[i].style.left);
+        const ringTop = parseInt(rings[i].style.top);
+        const isQuarterUnder = ringTop > quarterBoundsVirtical;
+
+        if (isQuarterUnder) {
+            if (fromDirection == "left" && ringLeft < gameDisplayWidth - quarterBoundsBeside) { //左から吹き飛ばす
+                repeatMove(rings[i], 10, -10, 1, 25);
+            } else if (fromDirection == "right" && ringLeft > quarterBoundsBeside) { //右から吹き飛ばす
+                repeatMove(rings[i], -10, -10, 1, 25);
+            }
         }
     }
-    
+
     //SE用
     clickSound.currentTime = 0;
     clickSound.play();
