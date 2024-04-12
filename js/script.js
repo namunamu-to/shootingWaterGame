@@ -1,3 +1,4 @@
+const clickSound = document.getElementById('btn_audio');
 let rings = [];
 
 //リングの生成
@@ -6,17 +7,15 @@ const ringHeight = 40;
 for(let i=0; i<1; i++){
     const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
     const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
-    rings.push(new Ring("gameDisplay", randomX, romdomY, width=ringWidth, height=ringHeight, color="red"));
-    rings.push(new Ring("gameDisplay", randomX, romdomY, width=ringWidth, height=ringHeight, color="blue"));
+    rings.push(new Ring("gameDisplay", randomX, romdomY, color="blue"));
 }
 
-setInterval(()=>{
-    for(let i=0; i<rings.length; i++){
-        
-    }
-}, 20)
+for(let i=0; i<1; i++){
+    const randomX = parseInt(Math.random() * (parseInt(gameDisplay.clientWidth) - ringWidth)); //0～ (gameDIsplay - ringHeight)の横幅の範囲でランダム
+    const romdomY = parseInt(Math.random() * (parseInt(gameDisplay.clientHeight) - ringHeight)); //0～　(gameDIsplay縦幅 - ringHeight)の範囲でランダム
+    rings.push(new Ring("gameDisplay", randomX, romdomY, color="red"));
+}
 
-const clickSound = document.getElementById('btn_audio');
 
 // 音声再生速度を調整する関数
 function adjustSoundSpeed(speed) {

@@ -9,10 +9,12 @@
 
 <body>
     <style>
-        div.container {
+        .ring {
             position: absolute;
             width: fit-content;
             background-color: rgb(212, 239, 30);
+            width: 40px;
+            height: 40px;
             text-align: center;
         }
     </style>
@@ -37,17 +39,26 @@
             var m = new mmm(x, y, '□', dx, dy);
         }
 
+        let createdNum = 0;
         function mmm(x, y, val, dx, dy) {
-            var element = document.createElement('div');
-            element.className = 'container';
-            element.innerHTML = val;
+            const id = "ring" + ++createdNum;
+            let element = document.createElement("img");
+            element.setAttribute("class", "ring");
+            element.setAttribute("id", id);
+            element.setAttribute("src", "./img/redRing.png");
+            // element.class = "ring";
+            // element.id = id;
+            // element.src = "./img/redRing.png";
+            // gameDisplay.innerHTML += `<img id="${id}" class="ring" src="./img/redRing.png"></img>`;
+            // var element = document.getElementById(id);
+            document.getElementById('gameDisplay').appendChild(element);
+
             element.style.left = x + 'px';
             element.style.top = y + 'px';
             element.px = x;
             element.py = y;
             element.xDir = 1;
             element.yDir = -1;
-            document.getElementById('gameDisplay').appendChild(element);
             setInterval(() => {
                 if ((element.xDir == -1 && element.px <= 0) || (element.xDir == 1 && element.px >= 800)) {
                     element.xDir *= -1;

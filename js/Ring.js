@@ -1,19 +1,16 @@
 class Ring {
     static ringImgPaths = { "red": "./img/redRing.png", "blue": "./img/blueRing.png" }
     static createdNum = 0;
-    constructor(showToElmId, x = 0, y = 0, width = 40, height = 40, color = "red") {
-        this.id = ++Ring.createdNum;
-        this.x = x;
-        this.y = y;
+    constructor(showToElmId, x = 0, y = 0, color = "red") {
+        const id = ++Ring.createdNum;
 
         //サークル画像の要素作り、引数で指定された要素に追加
-        let ringHtml = `<img id="${this.getId()}" class="ring" style="position: absolute;" src="${Ring.ringImgPaths[color]}">`;
         this.showElm = document.getElementById(showToElmId); //表示先の要素
-        this.showElm.innerHTML += ringHtml;
-        this.elm = document.getElementById(this.getId());
-
-        //描画サイズを引数で指定されたサイズに変更
-        this.setSize(width, height);
+        this.elm = document.createElement("img");
+        this.elm.setAttribute("class", "ring");
+        this.elm.setAttribute("id", id);
+        this.elm.setAttribute("src", Ring.ringImgPaths[color]);
+        this.showElm.appendChild(this.elm);
 
         //引数で指定された座標に描画
         this.elm.style.left = x + "px";
@@ -30,17 +27,8 @@ class Ring {
         }, 20);
     }
 
-    setColor(color) {
-        elm.src = Ring.ringImgPaths[color];
-    }
-
-    getId() {
-        return `ring${this.id}`;
-    }
-
     setSize(width = parseInt(this.elm.style.width), height = parseInt(this.elm.style.height)) {
-        this.elm.style.width = width + "px";
-        this.elm.style.height = height + "px";
+
     }
 
     //どこの側面にいるか
