@@ -13,6 +13,10 @@ function adjustSoundSpeed(speed) {
 //ボールを吹き飛ばす関数
 //引数は"right"か"Left"で指定
 function blowRing(fromDirection) {
+    //SE用
+    clickSound.currentTime = 0;
+    clickSound.play();
+    
     const gameDisplayWidth = gameDisplay.clientWidth;
     const gameDisplayHeight = gameDisplay.clientHeight;
 
@@ -51,9 +55,6 @@ function blowRing(fromDirection) {
 
     }
 
-    //SE用
-    clickSound.currentTime = 0;
-    clickSound.play();
 }
 
 document.addEventListener("click", (e) => {
@@ -70,7 +71,8 @@ document.addEventListener("keydown", (e) => {
         blowRing("left");
     }
 
-    if (e.location == 0) { //右シフト
+    if (e.keyCode == 16) { //右シフト
         blowRing("right");
     }
+
 });
