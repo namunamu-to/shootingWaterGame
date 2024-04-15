@@ -3,6 +3,7 @@ let rings = [];
 const ringImgPaths = { "red": "./img/redRing.png", "blue": "./img/blueRing.png" }
 let createdNum = 0;
 const ringSize = 40;
+const ringRadius = parseInt(ringSize / 2)
 
 function createRing(x = 0, y = 0, color = "red") {
     id = ++createdNum;
@@ -37,30 +38,30 @@ function createRing(x = 0, y = 0, color = "red") {
 }
 
 //int型の要素のx座標を取得する関数
-function getX(elm){
+function getX(elm) {
     return parseInt(elm.style.left);
 }
 
-function setX(elm, x){
+function setX(elm, x) {
     elm.style.left = x + "px";
 }
 
-function setY(elm, y){
+function setY(elm, y) {
     elm.style.top = y + "px";
 }
 
 //int型の要素のy座標を取得する関数
-function getY(elm){
+function getY(elm) {
     return parseInt(elm.style.top);
 }
 
 //int型の要素の横幅を取得する関数
-function getWidth(elm){
+function getWidth(elm) {
     return parseInt(elm.clientWidth);
 }
 
 //int型の要素の縦幅を取得する関数
-function getHeight(elm){
+function getHeight(elm) {
     return parseInt(elm.clientHeight);
 }
 
@@ -86,54 +87,48 @@ function restoreFromMoveOut(elm1, elm2) {
 }
 
 //要素が重なっているか判定する関数
-function judgeOverlap(elm1, elm2){
+function judgeOverlap(elm1, elm2) {
     const horizontal = (getX(elm1) < getX(elm2) + ringSize) && (getX(elm2) < getX(elm1) + ringSize);
     const vertical = (getY(elm1) < getY(elm2) + ringSize) && (getY(elm2) < getY(elm1) + ringSize);
 
     return horizontal && vertical;
 }
 
+function collision(){
+
+}
+
+
 //引数で指定された分だけ移動
 function move(elm, x = 0, y = 0) {
     restoreFromMoveOut(elm, showElm);
-    
-    //他の要素と重ならないようにする
-    for(let i=0; i<rings.length; i++){
-        if(elm.getAttribute("id") == rings[i].getAttribute("id")) continue; //同じ要素参照していたらcontinue
-        
-        if(judgeOverlap(elm, rings[i])) { //他の要素と重なっているか
-        //     if(x > 0){ //右方向に進もうとしてる時の移動量
-        //         x = (getX(elm)+ringSize) - getX(rings[i]);
-        //         // setX(elm, getX(rings[i]));
-        //     }else{
-        //         x = (getX(rings[i]) + ringSize) - (getX(elm));
-        //         // setX(elm, getX(rings[i]) + ringSize);
-        //     }
-            
-        //     if(y > 0){ //下方向に進もうとしてる時の移動量
-        //         y = (getY(elm)+ringSize) - getY(rings[i]);
-        //     //     setY(elm, getY(rings[i]));
-        //     }else{
-        //         y = (getY(rings[i]) + ringSize) - (getY(elm));
-        //     //     setY(elm, getY(rings[i]) + ringSize);
-        //     }
 
-        //     console.log(elm.getAttribute("id"), x, y);
-        //     // setX(elm, getX(elm) + x);
-        //     // setY(elm, getY(elm) + y);
-        //     // return;
-        //     // break;
-        //     return;
-        // restoreFromMoveOut(elm, rings[i]);
+
+    //他の要素と重ならないようにする
+    for (let i = rings.indexOf(elm) + 1; i < rings.length; i++) {
+        if (elm.getAttribute("id") == rings[i].getAttribute("id")) continue; //同じ要素参照していたらcontinue
+        const elm2 = rings[i];
+
+        //方程式で当たり判定
+        //ring1の座標とring2の座標の距離 < ring1半径＋ring2の半径
+        //dはdistanceの略
+        const toX = (getX(elm) + ringRadius) + x;
+        const toY = (getY(elm) + ringRadius) + y;
+        let dx = toX - (getX(elm2) + ringRadius);
+        let dy = toY - (getY(elm2) + ringRadius);
+        // const ringBetween =  
+        const ringBetween = dx ** 2 + dy ** 2
+        const maxRingBetween = (ringRadius * 2) ** 2
+        if (ringBetween < maxRingBetween) {
+            x *= -1;
+            break;
         }
+
     }
 
-    //移動
     setX(elm, getX(elm) + x);
     setY(elm, getY(elm) + y);
 
-    
-    
     restoreFromMoveOut(elm, showElm);
 }
 
