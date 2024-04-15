@@ -66,14 +66,11 @@ function getHeight(elm){
 
 //elm1がelm2のどこの側面にいるか
 function whichSide(elm1, elm2) {
-    const elmX = getX(elm1);
-    const elmY = getY(elm1);
-
     let nowSide = { "top": false, "bottom": false, "right": false, "left": false };
-    nowSide["left"] = elmX < 0; //左端
-    nowSide["right"] = elmX > getWidth(elm2) - getWidth(elm1); //右端
-    nowSide["top"] = elmY < 0; //上端
-    nowSide["bottom"] = elmY > getHeight(elm2) - getWidth(elm1); //下端
+    nowSide["left"] = getX(elm1) < 0; //左端
+    nowSide["right"] = getX(elm1) > getWidth(elm2) - getWidth(elm1); //右端
+    nowSide["top"] = getY(elm1) < 0; //上端
+    nowSide["bottom"] = getY(elm1) > getHeight(elm2) - getWidth(elm1); //下端
 
     return nowSide;
 }
@@ -83,11 +80,9 @@ function restoreFromMoveOut(elm1, elm2) {
     const nowSide = whichSide(elm1, elm2);
 
     if (nowSide["left"]) setX(elm1, 0); //左端
-    else if (nowSide["right"]) setX(elm1, getWidth(elm2) - getWidth(elm1)); //右端
+    else if (nowSide["right"]) setX(elm1, getWidth(elm2) - ringSize); //右端
     else if (nowSide["top"]) setY(elm1, 0); //上端
-    else if (nowSide["bottom"]) setY(elm1, getHeight(elm2) - getHeight(elm1)); // 下端
-
-    elm1.style.zIndex = 1000 + id; //この行がないとringが表示されなくなる。
+    else if (nowSide["bottom"]) setY(elm1, getHeight(elm2) - ringSize); // 下端
 }
 
 //要素が重なっているか判定する関数
@@ -107,36 +102,39 @@ function move(elm, x = 0, y = 0) {
         if(elm.getAttribute("id") == rings[i].getAttribute("id")) continue; //同じ要素参照していたらcontinue
         
         if(judgeOverlap(elm, rings[i])) { //他の要素と重なっているか
-            // if(x > 0){ //右方向に進もうとしてるなら、他の要素の左端に移動
-            //     setX(elm, getX(rings[i]));
-            // }else{
-            //     setX(elm, getX(rings[i]) + ringSize);
-            // }
+        //     if(x > 0){ //右方向に進もうとしてる時の移動量
+        //         x = (getX(elm)+ringSize) - getX(rings[i]);
+        //         // setX(elm, getX(rings[i]));
+        //     }else{
+        //         x = (getX(rings[i]) + ringSize) - (getX(elm));
+        //         // setX(elm, getX(rings[i]) + ringSize);
+        //     }
+            
+        //     if(y > 0){ //下方向に進もうとしてる時の移動量
+        //         y = (getY(elm)+ringSize) - getY(rings[i]);
+        //     //     setY(elm, getY(rings[i]));
+        //     }else{
+        //         y = (getY(rings[i]) + ringSize) - (getY(elm));
+        //     //     setY(elm, getY(rings[i]) + ringSize);
+        //     }
 
-            // if(y > 0){ //下方向に進もうとしてるなら、他の要素の上端に移動
-            //     setY(elm, getY(rings[i]));
-            // }else{
-            //     setY(elm, getY(rings[i]) + ringSize);
-            // }
+        //     console.log(elm.getAttribute("id"), x, y);
+        //     // setX(elm, getX(elm) + x);
+        //     // setY(elm, getY(elm) + y);
+        //     // return;
+        //     // break;
+        //     return;
+        // restoreFromMoveOut(elm, rings[i]);
         }
     }
+
     //移動
-    elm.style.position = "relative";
     setX(elm, getX(elm) + x);
     setY(elm, getY(elm) + y);
-    elm.style.position = "absolute";
 
     
     
     restoreFromMoveOut(elm, showElm);
-    // for(let i=0; i<rings.length; i++){
-    //     if(elm.getAttribute("id") == rings[i].getAttribute("id")) continue; //同じ要素参照していたらcontinue
-    //     console.log("----------------------");
-    //     console.log(getY(elm));
-    //     restoreFromMoveOut(elm, rings[i]);
-    //     console.log(getY(elm));
-    //     console.log("----------------------");
-    // }
 }
 
 //指定された時間をかけて指定された移動量を移動する
