@@ -48,3 +48,13 @@
 #Credit{
     text-align: center;
 }
+
+#point{
+    background-color: #fff;
+    width: 5rem;
+    height: 2rem;
+    position: absolute;
+    text-align: center;
+    right: 0px;
+    top: 0px;
+}

@@ -1,7 +1,6 @@
 const clickSound = document.getElementById('btn_audio');
 
 
-
 // 音声再生速度を調整する関数
 function adjustSoundSpeed(speed) {
     clickSound.playbackRate = speed;
