@@ -65,62 +65,55 @@ function getHeight(elm) {
     return parseInt(elm.clientHeight);
 }
 
-//elm1がelm2のどこの側面にいるか
-function whichSide(elm1, elm2) {
+//elm1がgameDisplayのどこの側面にいるか
+function whichSide(elm1) {
     let nowSide = { "top": false, "bottom": false, "right": false, "left": false };
-    nowSide["left"] = getX(elm1) < 0; //左端
-    nowSide["right"] = getX(elm1) > getWidth(elm2) - getWidth(elm1); //右端
-    nowSide["top"] = getY(elm1) < 0; //上端
-    nowSide["bottom"] = getY(elm1) > getHeight(elm2) - getWidth(elm1); //下端
+    nowSide.left = getX(elm1) < 0; //左端
+    nowSide.right = getX(elm1) > getWidth(showElm) - getWidth(elm1); //右端
+    nowSide.top = getY(elm1) < 0; //上端
+    nowSide.bottom = getY(elm1) > getHeight(showElm) - getWidth(elm1); //下端
 
     return nowSide;
 }
 
 //elm1がelm2からはみ出していたら、はみ出さないようにする
-function restoreFromMoveOut(elm1, elm2) {
-    const nowSide = whichSide(elm1, elm2);
+function restoreFromMoveOut(elm1) {
+    const nowSide = whichSide(elm1, showElm);
 
-    if (nowSide["left"]) setX(elm1, 0); //左端
-    else if (nowSide["right"]) setX(elm1, getWidth(elm2) - ringSize); //右端
-    else if (nowSide["top"]) setY(elm1, 0); //上端
-    else if (nowSide["bottom"]) setY(elm1, getHeight(elm2) - ringSize); // 下端
+    if (nowSide.left) setX(elm1, 0); //左端
+    else if (nowSide.right) setX(elm1, getWidth(showElm) - ringSize); //右端
+    else if (nowSide.top) setY(elm1, 0); //上端
+    else if (nowSide.bottom) setY(elm1, getHeight(showElm) - ringSize); // 下端
 }
-
-//要素が重なっているか判定する関数
-function judgeOverlap(elm1, elm2) {
-    const horizontal = (getX(elm1) < getX(elm2) + ringSize) && (getX(elm2) < getX(elm1) + ringSize);
-    const vertical = (getY(elm1) < getY(elm2) + ringSize) && (getY(elm2) < getY(elm1) + ringSize);
-
-    return horizontal && vertical;
-}
-
-function collision(){
-
-}
-
 
 //引数で指定された分だけ移動
+let exedRings = []
+for(let i=0; i<rings.length; i++) exedRings.push(false);
 function move(elm, x = 0, y = 0) {
-    restoreFromMoveOut(elm, showElm);
-
+    restoreFromMoveOut(elm);
 
     //他の要素と重ならないようにする
     for (let i = rings.indexOf(elm) + 1; i < rings.length; i++) {
-        if (elm.getAttribute("id") == rings[i].getAttribute("id")) continue; //同じ要素参照していたらcontinue
+    // for (let i = 0; i < rings.length; i++) {
+        // if (elm.getAttribute("id") == rings[i].getAttribute("id")) continue; //同じ要素参照していたらcontinue
+        // if(exedRings[i]) continue; //すでに実行されてたらcontinue
         const elm2 = rings[i];
 
         //方程式で当たり判定
         //ring1の座標とring2の座標の距離 < ring1半径＋ring2の半径
         //dはdistanceの略
-        const toX = (getX(elm) + ringRadius) + x;
-        const toY = (getY(elm) + ringRadius) + y;
-        let dx = toX - (getX(elm2) + ringRadius);
-        let dy = toY - (getY(elm2) + ringRadius);
-        // const ringBetween =  
+        const elmX = getX(elm) + ringRadius;
+        const elmY = getY(elm) + ringRadius;
+        const elm2X = getX(elm2) + ringRadius;
+        const elm2Y = getY(elm2) + ringRadius;
+        let dx = elmX - elm2X;
+        let dy = elmY - elm2Y;
         const ringBetween = dx ** 2 + dy ** 2
         const maxRingBetween = (ringRadius * 2) ** 2
         if (ringBetween < maxRingBetween) {
             x *= -1;
+            y = 0;
+
             break;
         }
 
@@ -129,7 +122,7 @@ function move(elm, x = 0, y = 0) {
     setX(elm, getX(elm) + x);
     setY(elm, getY(elm) + y);
 
-    restoreFromMoveOut(elm, showElm);
+    restoreFromMoveOut(elm);
 }
 
 //指定された時間をかけて指定された移動量を移動する
@@ -145,13 +138,13 @@ function repeatMove(elm, oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMov
 
 //リングの生成
 for (let i = 0; i < 1; i++) {
-    const randomX = Math.random() * (getWidth(gameDisplay) - ringSize); //0～ (gameDIsplay - ringSize)の横幅の範囲でランダム
+    const randomX = Math.random() * (getWidth(gameDisplay) - ringSize); //0～ (showElm - ringSize)の横幅の範囲でランダム
     const romdomY = Math.random() * (getHeight(gameDisplay) - ringSize); //0～　(gameDIsplay縦幅 - ringSize)の範囲でランダム
     rings.push(createRing(randomX, romdomY, color = "blue"));
 }
 
 for (let i = 0; i < 1; i++) {
-    const randomX = Math.random() * (getWidth(gameDisplay) - ringSize); //0～ (gameDIsplay - ringSize)の横幅の範囲でランダム
+    const randomX = Math.random() * (getWidth(gameDisplay) - ringSize); //0～ (showElm - ringSize)の横幅の範囲でランダム
     const romdomY = Math.random() * (getHeight(gameDisplay) - ringSize); //0～　(gameDIsplay縦幅 - ringSize)の範囲でランダム
     rings.push(createRing(randomX, romdomY, color = "red"));
 }
