@@ -28,11 +28,12 @@ function createRing(x = 0, y = 0, color = "red") {
     }, 8);
 
 
-    // //傾きに応じてx座標をずらす
+   //傾きに応じてx座標をずらす
+   setInterval(() => {
     var Rotationrandom = Math.floor(Math.random() * 7) + 10;
-    setInterval(() => {
-        move(elm, parseInt(currentRotation / Rotationrandom), 0);
-    }, 20);
+    console.log(`Ball ${id}: Rotation speed: ${Rotationrandom}`);
+    move(elm, parseInt(currentRotation / Rotationrandom), 0);
+}, 20);
 
     return elm;
 }
@@ -89,9 +90,18 @@ function restoreFromMoveOut(elm1) {
 //引数で指定された分だけ移動
 let exedRings = []
 for(let i=0; i<rings.length; i++) exedRings.push(false);
+
+
 function move(elm, x = 0, y = 0) {
+    const minDistance = ringSize; // ボール同士の最小距離
+
+
     restoreFromMoveOut(elm);
 
+
+    let distance; // distance変数をここで定義
+
+    
     //他の要素と重ならないようにする
     for (let i = rings.indexOf(elm) + 1; i < rings.length; i++) {
     // for (let i = 0; i < rings.length; i++) {
@@ -108,13 +118,25 @@ function move(elm, x = 0, y = 0) {
         const elm2Y = getY(elm2) + ringRadius;
         let dx = elmX - elm2X;
         let dy = elmY - elm2Y;
-        const ringBetween = dx ** 2 + dy ** 2
-        const maxRingBetween = (ringRadius * 2) ** 2
-        if (ringBetween < maxRingBetween) {
-            x *= -1;
-            y = 0;
+        // const ringBetween = dx ** 2 + dy ** 2
+        // const maxRingBetween = (ringRadius * 2) ** 2
 
-            break;
+        const distance = Math.sqrt(dx ** 2 + dy ** 2);
+
+        if (distance < minDistance) {
+        // if (ringBetween < maxRingBetween) {
+            // x *= -1;
+            // y = 0;
+
+            // break;
+
+
+            const angle = Math.atan2(dy, dx);
+            const overlap = minDistance - distance;
+            const offsetX = Math.cos(angle) * overlap;
+            const offsetY = Math.sin(angle) * overlap;
+            x += offsetX;
+            y += offsetY;
         }
 
     }
@@ -137,13 +159,13 @@ function repeatMove(elm, oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMov
 
 
 //リングの生成
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < 3; i++) {
     const randomX = Math.random() * (getWidth(gameDisplay) - ringSize); //0～ (showElm - ringSize)の横幅の範囲でランダム
     const romdomY = Math.random() * (getHeight(gameDisplay) - ringSize); //0～　(gameDIsplay縦幅 - ringSize)の範囲でランダム
     rings.push(createRing(randomX, romdomY, color = "blue"));
 }
 
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < 3; i++) {
     const randomX = Math.random() * (getWidth(gameDisplay) - ringSize); //0～ (showElm - ringSize)の横幅の範囲でランダム
     const romdomY = Math.random() * (getHeight(gameDisplay) - ringSize); //0～　(gameDIsplay縦幅 - ringSize)の範囲でランダム
     rings.push(createRing(randomX, romdomY, color = "red"));
