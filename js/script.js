@@ -1,13 +1,8 @@
 const clickSound = document.getElementById('btn_audio');
 
-
-// 音声再生速度を調整する関数
 function adjustSoundSpeed(speed) {
     clickSound.playbackRate = speed;
 }
-
-// 再生速度を0.5倍に設定する
-// adjustSoundSpeed(1.25);
 
 //ボールを吹き飛ばす関数
 //引数は"right"か"Left"で指定

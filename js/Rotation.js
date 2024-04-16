@@ -43,8 +43,7 @@ document.addEventListener('mousemove', (event) => {
     square.style.transform = `translate(0%, 0%) rotate(${rotation}deg)`;
 
     currentRotation = rotation;
-    // ただのログ
-    //console.log(`現在の回転角度: ${rotation}度`);
+
 });
 
 // キーボードの回転操作
@@ -104,8 +103,6 @@ function updateRotation() {
 
         square.style.transform = `translate(0%, 0%) rotate(${currentRotation}deg)`;
 
-        // ただのログ
-       // console.log(`現在の回転角度: ${currentRotation}度`);
     }
 }
 
