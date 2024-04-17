@@ -31,7 +31,7 @@ function createRing(x = 0, y = 0, color = "red") {
    //傾きに応じてx座標をずらす
    setInterval(() => {
     var Rotationrandom = Math.floor(Math.random() * 7) + 10;
-    console.log(`Ball ${id}: Rotation speed: ${Rotationrandom}`);
+    // console.log(`Ball ${id}: Rotation speed: ${Rotationrandom}`);
     move(elm, parseInt(currentRotation / Rotationrandom), 0);
 }, 20);
 
@@ -170,3 +170,70 @@ for (let i = 0; i < 3; i++) {
     const romdomY = Math.random() * (getHeight(gameDisplay) - ringSize); //0～　(gameDIsplay縦幅 - ringSize)の範囲でランダム
     rings.push(createRing(randomX, romdomY, color = "red"));
 }
+
+// ボールがポールに当たったかとクリア判定
+
+const pointDisplay = document.getElementById("point");
+
+
+const lingTossPole = document.querySelectorAll(".lingTossPole");
+const audioPointIncrease = document.getElementById('PointUp');
+const audioGameClear = document.getElementById('Gamec');
+
+// ボールがlingTossPoleの上部に触れたかどうかを判定する関数
+function isBallTouchingPole(ball, pole) {
+    const ballRect = ball.getBoundingClientRect();
+    const poleRect = pole.getBoundingClientRect();
+    
+    return (
+        ballRect.bottom >= poleRect.top && // ボールの下端がポールの上端よりも下にある
+        ballRect.left >= poleRect.left && // ボールの左端がポールの左端よりも右にある
+        ballRect.right <= poleRect.right // ボールの右端がポールの右端よりも左にある
+    );
+}
+
+// ボールがlingTossPoleの上部に触れたかどうかをチェックして処理する関数
+function handleBallTouchingPole() {
+    rings.forEach((ball) => {
+        lingTossPole.forEach((pole) => {
+            if (isBallTouchingPole(ball, pole)) {
+                // ポイントを1追加
+                pointDisplay.textContent = parseInt(pointDisplay.textContent) + 1;
+                // ボールを消去
+                ball.remove();
+
+                audioPointIncrease.currentTime = 0;
+                // ポイント増加音を再生
+                 audioPointIncrease.play();
+
+            // ボールがすべてなくなったらゲームクリアを表示
+            if (isAllBallsRemoved()) {
+                handleGameClear();
+                }
+            }
+        });
+    });
+}
+
+function isAllBallsRemoved() {
+    return document.querySelectorAll(".ring").length === 0;
+}
+
+
+// ボールがすべてなくなったらゲームクリアを表示する関数
+function handleGameClear() {
+    if (isAllBallsRemoved()) {
+        const gameClearMessage = document.createElement("div");
+        gameClearMessage.textContent = "ゲームクリア";
+        gameClearMessage.id = "gameClearMessage"; // CSSクラスを適用
+        gameDisplay.appendChild(gameClearMessage);
+     // ゲームクリア音声を再生
+     audioGameClear.play();
+    }
+}
+
+
+// 定期的にボールがlingTossPoleに触れたかどうかをチェック
+setInterval(() => {
+    handleBallTouchingPole();
+}, 100); // 100ミリ秒ごとにチェック
