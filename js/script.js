@@ -1,3 +1,5 @@
+let gameStarted = false; // ゲームが開始されたかどうかのフラグ
+
 const clickSound = document.getElementById('btn_audio');
 
 function adjustSoundSpeed(speed) {
@@ -6,7 +8,13 @@ function adjustSoundSpeed(speed) {
 
 //ボールを吹き飛ばす関数
 //引数は"right"か"Left"で指定
-function blowRing(fromDirection) {
+function blowRing(fromDirection) {  
+    
+    // ゲームが開始されていない場合は処理しない
+    if (!gameStarted) {
+        return;
+    }
+
     //SE用
     clickSound.currentTime = 0;
     clickSound.play();
@@ -18,7 +26,6 @@ function blowRing(fromDirection) {
     const quarterBoundsVirtical = gameDisplay.clientHeight / 4;
     const sectionHeight = gameDisplayHeight / 3;
     const sectionTopBoundaries = [sectionHeight, 2 * sectionHeight];
-
 
     //各リングを吹き飛ばす
     for (let i = 0; i < rings.length; i++) {

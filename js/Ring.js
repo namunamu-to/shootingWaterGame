@@ -5,6 +5,8 @@ let createdNum = 0;
 const ringSize = 40;
 const ringRadius = parseInt(ringSize / 2)
 
+
+
 function createRing(x = 0, y = 0, color = "red") {
     id = ++createdNum;
 
@@ -157,7 +159,7 @@ function repeatMove(elm, oneMoveAmmountX, oneMoveAmmountY, interval, numberOfMov
     }, interval);
 }
 
-
+function createInitialRings() {
 //リングの生成
 for (let i = 0; i < 3; i++) {
     const randomX = Math.random() * (getWidth(gameDisplay) - ringSize); //0～ (showElm - ringSize)の横幅の範囲でランダム
@@ -170,13 +172,13 @@ for (let i = 0; i < 3; i++) {
     const romdomY = Math.random() * (getHeight(gameDisplay) - ringSize); //0～　(gameDIsplay縦幅 - ringSize)の範囲でランダム
     rings.push(createRing(randomX, romdomY, color = "red"));
 }
-
+}
 // ボールがポールに当たったかとクリア判定
 
 const pointDisplay = document.getElementById("point");
-
-
 const lingTossPole = document.querySelectorAll(".lingTossPole");
+
+//SE
 const audioPointIncrease = document.getElementById('PointUp');
 const audioGameClear = document.getElementById('Gamec');
 
@@ -196,6 +198,8 @@ function isBallTouchingPole(ball, pole) {
 function handleBallTouchingPole() {
     rings.forEach((ball) => {
         lingTossPole.forEach((pole) => {
+
+
             if (isBallTouchingPole(ball, pole)) {
                 // ポイントを1追加
                 pointDisplay.textContent = parseInt(pointDisplay.textContent) + 1;
@@ -215,6 +219,7 @@ function handleBallTouchingPole() {
     });
 }
 
+
 function isAllBallsRemoved() {
     return document.querySelectorAll(".ring").length === 0;
 }
@@ -223,10 +228,12 @@ function isAllBallsRemoved() {
 // ボールがすべてなくなったらゲームクリアを表示する関数
 function handleGameClear() {
     if (isAllBallsRemoved()) {
+        
         const gameClearMessage = document.createElement("div");
         gameClearMessage.textContent = "ゲームクリア";
-        gameClearMessage.id = "gameClearMessage"; // CSSクラスを適用
+        gameClearMessage.id = "gameMessage"; // CSSクラスを適用
         gameDisplay.appendChild(gameClearMessage);
+
      // ゲームクリア音声を再生
      audioGameClear.play();
     }
