@@ -187,12 +187,21 @@ function isBallTouchingPole(ball, pole) {
     const ballRect = ball.getBoundingClientRect();
     const poleRect = pole.getBoundingClientRect();
     
-    return (
-        ballRect.bottom >= poleRect.top && // ボールの下端がポールの上端よりも下にある
-        ballRect.left >= poleRect.left && // ボールの左端がポールの左端よりも右にある
-        ballRect.right <= poleRect.right // ボールの右端がポールの右端よりも左にある
-    );
+    // ボールの中心座標を計算
+    const ballCenterX = ballRect.left + ballRect.width / 2;
+    const ballCenterY = ballRect.top + ballRect.height / 2;
+
+    // ポールの中心座標を計算
+    const poleCenterX = poleRect.left + poleRect.width / 2;
+    const poleCenterY = poleRect.top + poleRect.height / 2;
+
+    // ボールとポールの中心座標間の距離を計算
+    const distance = Math.sqrt((ballCenterX - poleCenterX) ** 2 + (ballCenterY - poleCenterY) ** 2);
+    
+    // ボールとポールの中心座標間の距離がボールの半径以下であれば衝突していると判定
+    return distance <= ringRadius;
 }
+
 
 // ボールがlingTossPoleの上部に触れたかどうかをチェックして処理する関数
 function handleBallTouchingPole() {
