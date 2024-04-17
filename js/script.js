@@ -28,15 +28,21 @@ function blowRing(fromDirection) {
 
         let moveDistanceX, moveDistanceY;
 
-        if (ringTop < sectionTopBoundaries[0]) {
-            moveDistanceX = 10;
-            moveDistanceY = 5;
-        } else if (ringTop >= sectionTopBoundaries[0] && ringTop < sectionTopBoundaries[1]) {
+        if (ringTop < sectionTopBoundaries[0]) 
+         // リングが最上部のセクションよりも上にある場合
+        {
             moveDistanceX = 5;
-            moveDistanceY = 15;
-        } else {
-            moveDistanceX = 3;
-            moveDistanceY = 25;
+            moveDistanceY = 7;
+        } else if (ringTop >= sectionTopBoundaries[0] && ringTop < sectionTopBoundaries[1]) 
+        // リングが中央のセクションにある場合
+        {
+            moveDistanceX = 5;
+            moveDistanceY = 20;
+        } else 
+        // リングが最下部のセクションにある場合
+        {
+            moveDistanceX = 5;
+            moveDistanceY = 50;
         }
 
         if (isQuarterUnder) {
